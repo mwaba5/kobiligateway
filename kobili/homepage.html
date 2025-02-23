@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOBILI - Modern Payment Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #1be4c9;
+            --primary-dark: #6D28D9;
+            --secondary: #EC4899;
+            --dark: #587093;
+            --light: #F9FAFB;
+            --success: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: #6178b0;
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Modern Navbar */
+        .navbar {
+            background: rgba(15, 26, 50, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Menu Button */
+        .menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--light);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(15, 26, 50, 0.9);
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .menu a {
+            display: block;
+            padding: 1rem;
+            color: var(--light);
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .menu {
+                display: none;
+            }
+
+            .menu.active {
+                display: block;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 5rem;
+            background-image: url(kobili-logo.jpg); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--light) 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #94A3B8;
+            margin-bottom: 2.5rem;
+            animation: fadeIn 2.5s ease-in-out;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Hero Section */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                font-size: 1rem;
+                padding: 0.75rem 1.5rem;
+            }
+        }
+
+        /* What is KOBILI? Section */
+        .about {
+            padding: 4rem 1rem;
+            background: rgba(30, 41, 59, 0.8);
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .about p {
+            font-size: 1rem;
+            color: #94A3B8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 1rem;
+            background: rgba(15, 26, 50, 0.8);
+        }
+
+        .features h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--light);
+        }
+
+        .feature-card p {
+            color: #94A3B8;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Features Section */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Kobili Business Section */
+        .business {
+            padding: 4rem 1rem;
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .business h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .business ul {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .business li {
+            font-size: 1rem;
+            color: #94A3B8;
+            margin-bottom: 1rem;
+        }
+
+        /* Kobili Developer Section */
+        .developer {
+            padding: 4rem 1rem;
+            background: rgba(15, 26, 50, 0.8);
+        }
+
+        .developer h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .developer ol {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .developer li {
+            font-size: 1rem;
+            color: #94A3B8;
+            margin-bottom: 1rem;
+        }
+
+        /* Kobili E-commerce Section */
+        .ecommerce {
+            padding: 4rem 1rem;
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .ecommerce h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .ecommerce p {
+            font-size: 1rem;
+            color: #94A3B8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Kobili Agent Section */
+        .agent {
+            padding: 4rem 1rem;
+            background: rgba(15, 26, 50, 0.8);
+        }
+
+        .agent h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            text-align: center;
+        }
+
+        .agent ol {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .agent li {
+            font-size: 1rem;
+            color: #94A3B8;
+            margin-bottom: 1rem;
+        }
+
+        /* Download App Section */
+        .download {
+            padding: 4rem 1rem;
+            background: rgba(30, 41, 59, 0.8);
+            text-align: center;
+        }
+
+        .download h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .download-buttons a {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .download-buttons a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            padding: 4rem 1rem;
+            background: rgba(15, 26, 50, 0.8);
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .newsletter form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+
+        .newsletter button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .newsletter button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer Section */
+        .footer {
+            background: #032983;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .footer-socials ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-socials a {
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .footer-copyright {
+            color: #94A3B8;
+            font-size: 0.875rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Scroll-to-Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Footer */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links ul, .footer-socials ul {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <!-- Menu Button -->
+                <div class="menu-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <!-- Menu -->
+                <div class="menu" id="menu">
+                    <a href="#Home">Home</a>
+                    <a href="#login">Log-in</a>
+                    <a href="#signup">Sign-up</a>
+                    <a href="#About">About</a>
+                    <a href="#Business">Business</a>
+                    <a href="#Developer">Developer</a>
+                    <a href="#Ecommerce">Ecommerce</a>
+                    <a href="#Agent">Agent</a>
+                    <a href="#Settings" id="settings-link">Settings</a>
+                    <a href="#Download App">Download App</a>
+                </div>
+                <a href="#" class="logo">
+                    <i class="fas fa-bolt logo-icon"></i>
+                    KOBILI
+                </a>
+                <div class="nav-links">
+                     <a href="#Home">Home</a>
+                    <a href="#business">Business</a>
+                    <a href="#developer">Developer</a>
+                    <a href="#ecommerce">E-commerce</a>
+                    <a href="#Settings">Settings</a>
+                    <a href="#agent">Agent</a>
+                    <button class="login-btn">Login</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Pay In. Pay Out. Pay Safe. With KOBILI</h1>
+                <p>Experience lightning-fast, secure payments with our next-gen platform</p>
+                <button class="cta-button">Get Started Free</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is KOBILI? Section -->
+    <section class="about">
+        <div class="container">
+            <h2>What is KOBILI?</h2>
+            <p>KOBILI is a modern payment solution designed to make transactions faster, safer, and more efficient. Whether you're a business, developer, or individual, KOBILI has the tools you need to succeed.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3>Bank-Grade Security</h3>
+                    <p>Enterprise-level encryption and fraud protection for every transaction</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h3>Instant Transfers</h3>
+                    <p>Real-time payment processing with instant confirmations</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe feature-icon"></i>
+                    <h3>Global Reach</h3>
+                    <p>Accept payments from customers anywhere in the world</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-exchange-alt feature-icon"></i>
+                    <h3>International Transactions</h3>
+                    <p>Seamlessly send and receive payments across borders</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kobili Business Section -->
+    <section class="business" id="business">
+        <div class="container">
+            <h2>Kobili Business</h2>
+            <ul>
+                <li>Streamline your payment processes</li>
+                <li>Access real-time analytics and reports</li>
+                <li>Integrate with your existing systems</li>
+                <li>Enjoy competitive transaction fees</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Kobili Developer Section -->
+    <section class="developer" id="developer">
+        <div class="container">
+            <h2>Kobili Developer</h2>
+            <ol>
+                <li>Sign up for a developer account</li>
+                <li>Access our API documentation</li>
+                <li>Integrate KOBILI into your platform</li>
+                <li>Test your integration in our sandbox environment</li>
+                <li>Go live and start processing payments</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Kobili E-commerce Section -->
+    <section class="ecommerce" id="ecommerce">
+        <div class="container">
+            <h2>Kobili E-commerce</h2>
+            <p>KOBILI integrates seamlessly with your online store, providing a secure and efficient payment gateway for your customers. Boost your sales with our easy-to-use platform.</p>
+        </div>
+    </section>
+
+    <!-- Kobili Agent Section -->
+    <section class="agent" id="agent">
+        <div class="container">
+            <h2>Become a Kobili Agent</h2>
+            <ol>
+                <li>Sign up on our website</li>
+                <li>Complete the verification process</li>
+                <li>Attend our training sessions</li>
+                <li>Start onboarding clients</li>
+                <li>Earn commissions on every transaction</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Download App Section -->
+    <section class="download" id="download">
+        <div class="container">
+            <h2>Download the App</h2>
+            <div class="download-buttons">
+                <a href="#"><i class="fab fa-google-play"></i> Play Store</a>
+                <a href="#"><i class="fab fa-apple"></i> Apple Store</a>
+                <a href="#"><i class="fab fa-windows"></i> Windows</a>
+                <a href="#"><i class="fab fa-linux"></i> Linux</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <form>
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <section class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#" class="logo">
+                        <i class="fas fa-bolt logo-icon"></i>
+                        KOBILI
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#business">Business</a></li>
+                        <li><a href="#developer">Developer</a></li>
+                        <li><a href="#ecommerce">E-commerce</a></li>
+                        <li><a href="#agent">Agent</a></li>
+                    </ul>
+                </div>
+                <div class="footer-socials">
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2025 KOBILI. All rights reserved.
+            </div>
+        </div>
+    </section>
+
+    <!-- Scroll-to-Top Button -->
+    <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Toggle Menu
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+
+        // Scroll-to-Top Button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+    <script>
+        // Get the settings link by its ID
+        const settingsLink = document.getElementById('settings-link');
+    
+        // Add a click event listener to the settings link
+        settingsLink.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link (which is to scroll to the #Settings section)
+            event.preventDefault();
+    
+            // Redirect the user to the settings.html page
+            window.location.href = 'settings.html';
+        });
+    </script>
+</body>
+</html>
